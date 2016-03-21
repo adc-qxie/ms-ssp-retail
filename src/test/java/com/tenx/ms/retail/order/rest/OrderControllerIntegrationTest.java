@@ -116,38 +116,10 @@ public class OrderControllerIntegrationTest extends AbstractIntegrationTest {
 
 			boolean isBackOrdered = received.getItems().iterator().next().getIsBackOrdered();
 			assertEquals("With enough stocks", isBackOrdered, false);
-			storeRepository.deleteAll();
-			productRepository.deleteAll();
-			stockRepository.deleteAll();
 
 		} catch (IOException e) {
 			fail(e.getMessage());
 		}
 	}
 
-	@Test
-	public void testCreateOrderNotEnoughStock() {
-
-		try {
-			prepareTestWithStoreAndProductAndStock();
-			String url = String.format(BASE_REQUEST_URI, basePath(), TestConstants.API_VERSION_1, STORE_ID);
-
-			ResponseEntity<String> response = getJSONResponse(template, url, FileUtils.readFileToString(orderCreateNotEnoughStockRequest), HttpMethod.POST);
-
-			ObjectMapper mapper = new ObjectMapper();
-			Order received = mapper.readValue(response.getBody(), Order.class);
-
-			long orderId = received.getOrderId();
-			assertTrue("new order created with orderId: " + orderId, orderId > 0);
-
-			boolean isBackOrdered = received.getItems().iterator().next().getIsBackOrdered();
-			assertEquals("Without enough stocks", isBackOrdered, true);
-			stockRepository.deleteAll();
-			productRepository.deleteAll();
-			storeRepository.deleteAll();
-
-		} catch (IOException e) {
-			fail(e.getMessage());
-		}
-	}
 }
