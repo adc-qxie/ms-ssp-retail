@@ -22,20 +22,34 @@ public class OrderItem {
 	@ApiModelProperty("quantity of the purchased product - should be greater than 0")
 	private Integer quantity;
 
+	@JsonProperty("is_backordered")
+	private boolean isBackOrdered = false;
+
 	public Long getProductId() {
 		return productId;
 	}
 
-	public void setProductId(Long productId) {
+	public OrderItem setProductId(Long productId) {
 		this.productId = productId;
+		return this;
 	}
 
 	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public OrderItem setQuantity(Integer quantity) {
 		this.quantity = quantity;
+		return this;
+	}
+
+	public boolean getIsBackOrdered() {
+		return isBackOrdered;
+	}
+
+	public OrderItem setIsBackOrdered(Boolean isBackOrdered) {
+		this.isBackOrdered = isBackOrdered;
+		return this;
 	}
 
 }

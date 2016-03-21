@@ -24,24 +24,27 @@ public class Stock {
 		return storeId;
 	}
 
-	public void setStoreId(long storeId) {
+	public Stock setStoreId(long storeId) {
 		this.storeId = storeId;
+		return this;
 	}
 
 	public long getProductId() {
 		return productId;
 	}
 
-	public void setProductId(long productId) {
+	public Stock setProductId(long productId) {
 		this.productId = productId;
+		return this;
 	}
 
 	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public Stock setQuantity(Integer quantity) {
 		this.quantity = quantity;
+		return this;
 	}
 
 }

@@ -29,8 +29,9 @@ public class StockService {
 
 		int quantity = existingStock.getQuantity() + count;
 
-		if (quantity < 0)
+		if (quantity < 0) {
 			return null;
+		}
 
 		StockEntity stock = new StockEntity();
 		stock.setProductId(productId);

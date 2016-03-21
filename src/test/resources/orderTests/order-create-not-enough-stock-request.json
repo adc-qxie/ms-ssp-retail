@@ -1,0 +1,6 @@
+{"first_name":"qing",
+ "last_name": "xie",
+ "phone":1234567890,
+ "email":"abc@example.com",
+ "items":[{"product_id":1, "count":50}]
+ }

@@ -19,6 +19,7 @@ import com.tenx.ms.retail.order.rest.dto.CreateOrder;
 import com.tenx.ms.retail.order.rest.dto.Order;
 import com.tenx.ms.retail.order.rest.dto.OrderItem;
 import com.tenx.ms.retail.product.repository.ProductRepository;
+import com.tenx.ms.retail.stock.rest.dto.Stock;
 import com.tenx.ms.retail.stock.service.StockService;
 import com.tenx.ms.retail.store.repository.StoreRepository;
 
@@ -57,10 +58,15 @@ public class OrderService {
 
 		for (OrderItem item : createOrder.getItems()) {
 			OrderItemEntity orderItem = covertOrderItemFromDTO(item);
+
+			Stock stock = stockService.addStock(storeId, item.getProductId(), 0 - item.getQuantity());
+			if (stock == null)
+				orderItem.setIsBackOrdered(true);
+
 			orderItem.setOrderId(order.getOrderId());
 			orderItem = orderItemRepository.save(orderItem);
+
 			order.getItems().add(orderItem);
-			stockService.addStock(storeId, item.getProductId(), 0 - item.getQuantity());
 		}
 
 		order = orderRepository.save(order);
@@ -83,6 +89,7 @@ public class OrderService {
 		OrderItemEntity oi = new OrderItemEntity();
 		oi.setProductId(item.getProductId());
 		oi.setQuantity(item.getQuantity());
+		oi.setIsBackOrdered(item.getIsBackOrdered());
 		return oi;
 	}
 
@@ -107,6 +114,7 @@ public class OrderService {
 		OrderItem oi = new OrderItem();
 		oi.setProductId(item.getProductId());
 		oi.setQuantity(item.getQuantity());
+		oi.setIsBackOrdered(item.getIsBackOrdered());
 		return oi;
 	}
 }

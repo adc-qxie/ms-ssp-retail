@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.tenx.ms.commons.rest.dto.Paginated;
 import com.tenx.ms.retail.store.domain.StoreEntity;
+import com.tenx.ms.retail.store.exception.StoreAlreadyExistsException;
 import com.tenx.ms.retail.store.repository.StoreRepository;
 import com.tenx.ms.retail.store.rest.dto.CreateStore;
 import com.tenx.ms.retail.store.rest.dto.Store;
@@ -50,9 +51,9 @@ public class StoreService {
 		return Paginated.wrap(page, stores, baseLinkPath);
 	}
 
-	public Store createStore(CreateStore store) {
+	public Store createStore(CreateStore store) throws StoreAlreadyExistsException {
 		if (getStoreByName(null, null, store.getStoreName()).getTotalCount() > 0) {
-			return null;
+			throw new StoreAlreadyExistsException("Store with name " + store.getStoreName() + " already exists");
 		}
 
 		return convertToDTO(storeRepository.save(convertFromDTO(store)));

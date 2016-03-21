@@ -49,7 +49,7 @@ public class OrderEntity implements Serializable {
 	@Enumerated(EnumType.ORDINAL)
 	private OrderStatus status;
 
-	@OneToMany(mappedBy = "purchaseOrder")
+	@OneToMany(mappedBy = "order")
 	private Set<OrderItemEntity> items = new HashSet<>();
 
 	@Pattern(regexp = "^[A-Za-z]+$")

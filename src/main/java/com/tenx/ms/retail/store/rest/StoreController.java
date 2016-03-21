@@ -24,10 +24,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tenx.ms.commons.rest.APIError;
 import com.tenx.ms.commons.rest.RestConstants;
+import com.tenx.ms.commons.rest.SystemError;
 import com.tenx.ms.commons.rest.dto.Paginated;
 import com.tenx.ms.commons.rest.dto.ResourceCreated;
+import com.tenx.ms.retail.store.exception.StoreAlreadyExistsException;
 import com.tenx.ms.retail.store.rest.dto.CreateStore;
 import com.tenx.ms.retail.store.rest.dto.Store;
 import com.tenx.ms.retail.store.service.StoreService;
@@ -77,13 +78,14 @@ public class StoreController {
 	public ResponseEntity<?> createStore(@ApiParam(value = "create store object", required = true) @Validated @RequestBody CreateStore createStore, HttpServletRequest request) {
 		LOGGER.info("Creating a new store: {} ", createStore.getStoreName());
 		HttpHeaders headers = new HttpHeaders();
-		Store store = storeService.createStore(createStore);
-		if (store == null)
-			// TODO:create a generic error message
-			return new ResponseEntity<>(new APIError("Store exception", 400, "resource exists", "store name already exists"), headers, HttpStatus.BAD_REQUEST);
-		Long storeId = store.getStoreId();
-		headers.add(HttpHeaders.LOCATION, request.getRequestURL().append(storeId).toString());
-		return new ResponseEntity<>(new ResourceCreated<>(storeId), headers, HttpStatus.CREATED);
+		try {
+			Store store = storeService.createStore(createStore);
+			Long storeId = store.getStoreId();
+			headers.add(HttpHeaders.LOCATION, request.getRequestURL().append(storeId).toString());
+			return new ResponseEntity<>(new ResourceCreated<>(storeId), headers, HttpStatus.OK);
+		} catch (StoreAlreadyExistsException e) {
+			return new ResponseEntity<>(new SystemError("Store exists", HttpStatus.BAD_REQUEST.value(), e), HttpStatus.BAD_REQUEST);
+		}
 
 	}
 

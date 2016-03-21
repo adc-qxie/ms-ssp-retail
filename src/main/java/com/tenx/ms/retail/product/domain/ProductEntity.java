@@ -43,7 +43,7 @@ public class ProductEntity implements Serializable {
 	private String productSku;
 
 	@NotNull
-	@Column(name = "price")
+	@Column(name = "price", columnDefinition = "Decimal(10,2)")
 	@Min(value = 0, message = "price shohuld be positive number")
 	private Double price;
 

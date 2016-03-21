@@ -1,0 +1,6 @@
+{"name":"shoe2",
+ "description": "a pair of boots",
+ "sku":"ssbc134",
+ "price":100.2,
+ store_id:1,
+ product_id:1}

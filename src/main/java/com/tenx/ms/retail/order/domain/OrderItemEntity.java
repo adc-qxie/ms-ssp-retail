@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -14,17 +14,22 @@ import javax.persistence.Table;
 public class OrderItemEntity {
 
 	@Id
+	@Column(name = "order_id")
 	private Long orderId;
 
 	@Id
+	@Column(name = "product_id")
 	private Long productId;
 
 	@Column(name = "quantity")
 	private Integer quantity;
 
+	@Column(name = "is_backordered", columnDefinition = "TINYINT")
+	private boolean isBackOrdered;
+
 	@ManyToOne
-	@PrimaryKeyJoinColumn(name = "order_id", referencedColumnName = "order_id")
-	private OrderEntity purchaseOrder;
+	@JoinColumn(name = "order_id", insertable = false, updatable = false)
+	private OrderEntity order;
 
 	public Long getOrderId() {
 		return orderId;
@@ -51,11 +56,19 @@ public class OrderItemEntity {
 	}
 
 	public OrderEntity getOrder() {
-		return purchaseOrder;
+		return order;
 	}
 
-	public void setOrder(OrderEntity purchaseOrder) {
-		this.purchaseOrder = purchaseOrder;
+	public void setOrder(OrderEntity order) {
+		this.order = order;
+	}
+
+	public boolean getIsBackOrdered() {
+		return isBackOrdered;
+	}
+
+	public void setIsBackOrdered(Boolean isBackOrdered) {
+		this.isBackOrdered = isBackOrdered;
 	}
 
 }

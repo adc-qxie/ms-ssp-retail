@@ -64,72 +64,81 @@ public class Order {
 		return orderId;
 	}
 
-	public void setOrderId(Long orderId) {
+	public Order setOrderId(Long orderId) {
 		this.orderId = orderId;
+		return this;
 	}
 
 	public Long getStoreId() {
 		return storeId;
 	}
 
-	public void setStoreId(Long storeId) {
+	public Order setStoreId(Long storeId) {
 		this.storeId = storeId;
+		return this;
 	}
 
 	public Date getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
+	public Order setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
+		return this;
 	}
 
 	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public Order setStatus(String status) {
 		this.status = status;
+		return this;
 	}
 
 	public String getFirstName() {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	public Order setFirstName(String firstName) {
 		this.firstName = firstName;
+		return this;
 	}
 
 	public String getLastName() {
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
+	public Order setLastName(String lastName) {
 		this.lastName = lastName;
+		return this;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public Order setEmail(String email) {
 		this.email = email;
+		return this;
 	}
 
 	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(String phone) {
+	public Order setPhone(String phone) {
 		this.phone = phone;
+		return this;
 	}
 
 	public Set<OrderItem> getItems() {
 		return items;
 	}
 
-	public void setItems(Set<OrderItem> items) {
+	public Order setItems(Set<OrderItem> items) {
 		this.items = items;
+		return this;
 	}
 
 }

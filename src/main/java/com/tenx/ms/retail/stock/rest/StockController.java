@@ -21,9 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tenx.ms.commons.rest.APIError;
 import com.tenx.ms.commons.rest.RestConstants;
+import com.tenx.ms.commons.rest.SystemError;
 import com.tenx.ms.retail.product.service.ProductService;
+import com.tenx.ms.retail.stock.exception.OutOfStockException;
 import com.tenx.ms.retail.stock.rest.dto.Stock;
 import com.tenx.ms.retail.stock.rest.dto.UpdateStock;
 import com.tenx.ms.retail.stock.service.StockService;
@@ -67,13 +68,14 @@ public class StockController {
 			productService.getProductByID(storeId, productId).get();
 		} catch (Exception e) {
 			LOGGER.error("Product {} in store {} does not exist", productId, storeId);
-			return new ResponseEntity<>(new APIError("Validation failure", 412, "resource not exist", "product does not exist"), headers, HttpStatus.PRECONDITION_FAILED);
+			return new ResponseEntity<>(new SystemError("Validation Error", HttpStatus.PRECONDITION_FAILED.value(), e), headers, HttpStatus.PRECONDITION_FAILED);
 		}
 
 		Stock stock = stockService.addStock(storeId, productId, updateStock.getQuantity());
 		if (stock == null) {
 			LOGGER.error("Product {} in store {} does not have enough stock", productId, storeId);
-			return new ResponseEntity<>(new APIError("Validation failure", 412, "Out of stock", "product out of stock"), headers, HttpStatus.PRECONDITION_FAILED);
+			return new ResponseEntity<>(new SystemError("Out Of Stock Error", HttpStatus.PRECONDITION_FAILED.value(), new OutOfStockException("Not enough stock for product:"
+					+ productId)), headers, HttpStatus.PRECONDITION_FAILED);
 		}
 		headers.add(HttpHeaders.LOCATION, request.getRequestURL().toString());
 		return new ResponseEntity<>(null, headers, HttpStatus.OK);

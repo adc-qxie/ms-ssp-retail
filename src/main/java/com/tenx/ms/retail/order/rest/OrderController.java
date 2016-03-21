@@ -26,10 +26,8 @@ import com.tenx.ms.commons.rest.RestConstants;
 import com.tenx.ms.commons.rest.dto.ResourceCreated;
 import com.tenx.ms.retail.order.rest.dto.CreateOrder;
 import com.tenx.ms.retail.order.rest.dto.Order;
-import com.tenx.ms.retail.order.rest.dto.OrderItem;
 import com.tenx.ms.retail.order.service.OrderService;
 import com.tenx.ms.retail.product.service.ProductService;
-import com.tenx.ms.retail.stock.rest.dto.Stock;
 import com.tenx.ms.retail.stock.service.StockService;
 import com.tenx.ms.retail.store.service.StoreService;
 
@@ -79,19 +77,11 @@ public class OrderController {
 			return new ResponseEntity<>(new APIError("Validation failure", 412, "resource not exist", "store does not exist"), headers, HttpStatus.PRECONDITION_FAILED);
 		}
 
-		for (OrderItem item : createOrder.getItems()) {
-			Stock stock = stockService.getStockByStoreIdAndProductId(storeId, item.getProductId()).get();
-			if (stock.getQuantity() < item.getQuantity()) {
-				LOGGER.error("not enough in stock for product {} in store {}", stock.getProductId(), storeId);
-				return new ResponseEntity<>(new APIError("Validation failure", 412, "not enough in stock", "not enough in stock"), headers, HttpStatus.PRECONDITION_FAILED);
-			}
-		}
-
 		Order order = orderService.createOrder(createOrder, storeId);
 
 		Long orderId = order.getOrderId();
 		headers.add(HttpHeaders.LOCATION, request.getRequestURL().append(orderId).toString());
-		return new ResponseEntity<>(new ResourceCreated<>(orderId), headers, HttpStatus.OK);
+		return new ResponseEntity<>(order, headers, HttpStatus.OK);
 
 	}
 }
