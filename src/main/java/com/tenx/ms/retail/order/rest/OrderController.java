@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tenx.ms.commons.rest.APIError;
 import com.tenx.ms.commons.rest.RestConstants;
-import com.tenx.ms.commons.rest.dto.ResourceCreated;
 import com.tenx.ms.retail.order.rest.dto.CreateOrder;
 import com.tenx.ms.retail.order.rest.dto.Order;
 import com.tenx.ms.retail.order.service.OrderService;
@@ -63,7 +62,7 @@ public class OrderController {
 
 	}
 
-	@ApiOperation(value = "Create order in a store", notes = "The POST order endpoint creates the order placed on a store and returns the orderId.", response = ResourceCreated.class)
+	@ApiOperation(value = "Create order in a store", notes = "The POST order endpoint creates the order placed on a store and returns the orderId.", response = Order.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful create an order"), @ApiResponse(code = 412, message = "Validation failure"),
 			@ApiResponse(code = 500, message = "Internal server error") })
 	@RequestMapping(value = { "/{storeId:\\d+}" }, method = RequestMethod.POST)
