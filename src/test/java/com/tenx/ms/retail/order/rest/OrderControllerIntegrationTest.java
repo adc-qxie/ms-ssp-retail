@@ -33,6 +33,7 @@ import com.tenx.ms.retail.product.repository.ProductRepository;
 import com.tenx.ms.retail.stock.repository.StockRepository;
 import com.tenx.ms.retail.store.repository.StoreRepository;
 
+@SuppressWarnings("PMD")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = RetailServiceApp.class)
 @ActiveProfiles(Profiles.TEST_NOAUTH)

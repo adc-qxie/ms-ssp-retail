@@ -32,6 +32,7 @@ import com.tenx.ms.retail.TestConstants;
 import com.tenx.ms.retail.store.repository.StoreRepository;
 import com.tenx.ms.retail.store.rest.dto.Store;
 
+@SuppressWarnings("PMD")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = RetailServiceApp.class)
 @ActiveProfiles(Profiles.TEST_NOAUTH)
@@ -57,6 +58,7 @@ public class StoreControllerIntegrationTest extends AbstractIntegrationTest {
 	}
 
 	private void prepareTestWithNewStore() throws IOException {
+
 		String url = String.format(BASE_REQUEST_URI, basePath(), TestConstants.API_VERSION_1);
 
 		getJSONResponse(template, url, FileUtils.readFileToString(storeCreateRequest), HttpMethod.POST);
