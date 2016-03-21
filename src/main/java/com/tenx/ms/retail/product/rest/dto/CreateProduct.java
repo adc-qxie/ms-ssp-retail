@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @ApiModel("Request payload to create product")
 public class CreateProduct {
 
-	@NotBlank
+	@NotBlank(message = "product name is blank")
 	@ApiModelProperty(value = "The product name", required = true)
 	@JsonProperty("name")
 	private String productName;
@@ -27,15 +27,15 @@ public class CreateProduct {
 
 	@ApiModelProperty(value = "The product sku - alpha numeric with length 5-10", required = true)
 	@JsonProperty("sku")
-	@Pattern(regexp = "^[A-Za-z0-9]+$")
-	@Size(min = 5, max = 10)
-	@NotNull
+	@Pattern(regexp = "^[A-Za-z0-9]+$", message = "sku value should be alpha numeric with length 5-10")
+	@Size(min = 5, max = 10, message = "sku length should be 5-10")
+	@NotNull(message = "sku is null")
 	private String sku;
 
-	@NotNull
-	@ApiModelProperty(value = "The product unit price", required = true)
+	@NotNull(message = "price is null")
+	@ApiModelProperty(value = "The product unit price - cannot be negative", required = true)
 	@JsonProperty("price")
-	@Min(0)
+	@Min(value = 0, message = "price is negative")
 	private Double price;
 
 	@JsonIgnore

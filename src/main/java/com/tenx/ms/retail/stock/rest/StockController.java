@@ -41,7 +41,7 @@ public class StockController {
 	@Autowired
 	private ProductService productService;
 
-	@ApiOperation(value = "Get Stock Information by Store ID and Product ID")
+	@ApiOperation(value = "Get Stock Information by Store ID and Product ID", notes = "The GET stock endpoint returns the quantity in stock of a product with the given storeId and productId. ")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful retrieval of the stock detail"),
 			@ApiResponse(code = 404, message = "Product with given Store ID and Product ID does not exist"), @ApiResponse(code = 500, message = "Internal server error") })
 	@RequestMapping(value = { "/{storeId:\\d+}/{productId:\\d+}" }, method = RequestMethod.GET)
@@ -54,12 +54,12 @@ public class StockController {
 
 	}
 
-	@ApiOperation(value = "Update stock of the product (count < 0 means decrease, count > 0 means increase)")
+	@ApiOperation(value = "Update stock of the product", notes = "The PUT stock endpoint updates the stock of the product with increased/decreased quantity (count < 0 means decrease, count > 0 means increase)")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful update of the stock"), @ApiResponse(code = 412, message = "Validation failure"),
 			@ApiResponse(code = 500, message = "Internal server error") })
 	@RequestMapping(value = { "/{storeId:\\d+}/{productId:\\d+}" }, method = RequestMethod.PUT)
-	public ResponseEntity<?> updateStock(@ApiParam(name = "storeId", value = "The id of the store", required = true) @PathVariable long storeId,
-			@ApiParam(name = "productId", value = "The id of the product", required = true) @PathVariable long productId,
+	public ResponseEntity<?> updateStock(@ApiParam(name = "storeId", value = "The id of the store the product belongs to", required = true) @PathVariable long storeId,
+			@ApiParam(name = "productId", value = "The id of the product ", required = true) @PathVariable long productId,
 			@ApiParam(value = "Update stock object", required = true) @Validated @RequestBody UpdateStock updateStock, HttpServletRequest request) {
 		LOGGER.info("Updating the stock of product: {} ", productId);
 		HttpHeaders headers = new HttpHeaders();

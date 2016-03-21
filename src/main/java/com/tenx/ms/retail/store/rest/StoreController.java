@@ -42,7 +42,7 @@ public class StoreController {
 	@Autowired
 	private StoreService storeService;
 
-	@ApiOperation(value = "Get Store Information by ID")
+	@ApiOperation(value = "Get Store Information by ID", notes = "The GET store endpoint returns information about the store with the given storeId.")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful retrieval of the store detail"),
 			@ApiResponse(code = 404, message = "StoreEntity with given id does not exist"), @ApiResponse(code = 500, message = "Internal server error") })
 	@RequestMapping(value = { "/{storeId:\\d+}" }, method = RequestMethod.GET)
@@ -54,7 +54,7 @@ public class StoreController {
 
 	}
 
-	@ApiOperation(value = "Finds all stores or filter by store name")
+	@ApiOperation(value = "Finds all stores or filter by store name", notes = "The GET store endpoint returns information of all the existing stores.")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful retrieval of stores"), @ApiResponse(code = 500, message = "Internal server error") })
 	@RequestMapping(method = RequestMethod.GET)
 	public Paginated<Store> getAllStores(Pageable pageable,
@@ -70,7 +70,7 @@ public class StoreController {
 
 	}
 
-	@ApiOperation(value = "Creates a new Store")
+	@ApiOperation(value = "Creates a new Store", notes = "The POST store endpoint creates a new store and returns storeId", response = ResourceCreated.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful creation of the store"), @ApiResponse(code = 400, message = "If store exists"),
 			@ApiResponse(code = 412, message = "Validation failure"), @ApiResponse(code = 500, message = "Internal server error") })
 	@RequestMapping(method = RequestMethod.POST)

@@ -1,9 +1,11 @@
 package com.tenx.ms.retail.store.rest.dto;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@ApiModel("Returns the store information")
 public class Store {
 
 	@ApiModelProperty("The store ID - (readonly)")

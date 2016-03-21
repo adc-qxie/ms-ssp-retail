@@ -58,7 +58,7 @@ public class ProductController {
 
 	}
 
-	@ApiOperation(value = "Finds all products within a store", notes = "The GET product endpoint returns information of all the products in a store with the given storeId.", response = Paginated.class)
+	@ApiOperation(value = "Finds all products within a store", notes = "The GET product endpoint returns information of all the products in a store with the given storeId.")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful retrieval of products"), @ApiResponse(code = 500, message = "Internal server error") })
 	@RequestMapping(value = { "/{storeId:\\d+}" }, method = RequestMethod.GET)
 	public Paginated<Product> getAllProductsByStoreId(
@@ -74,8 +74,7 @@ public class ProductController {
 			@ApiResponse(code = 412, message = "Validation failure"), @ApiResponse(code = 500, message = "Internal server error") })
 	@RequestMapping(value = { "/{storeId:\\d+}" }, method = RequestMethod.POST)
 	public ResponseEntity<?> createProduct(@ApiParam(name = "storeId", value = "The id of the store the product belongs to", required = true) @PathVariable long storeId,
-			@ApiParam(value = "request json payload to describe the product to be created", required = true) @Validated @RequestBody CreateProduct createProduct,
-			HttpServletRequest request) {
+			@ApiParam(value = "create product object", required = true) @Validated @RequestBody CreateProduct createProduct, HttpServletRequest request) {
 		LOGGER.info("Creating a new product: {} for store: {}", createProduct.getProductName(), storeId);
 		createProduct.setStoreId(storeId);
 		HttpHeaders headers = new HttpHeaders();

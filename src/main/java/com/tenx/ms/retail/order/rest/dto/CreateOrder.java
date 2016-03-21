@@ -16,27 +16,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @ApiModel("Request payload to create order")
 public class CreateOrder {
 
-	@Pattern(regexp = "^[A-Za-z]+$")
+	@Pattern(regexp = "^[A-Za-z]+$", message = "first name should contain alpha letters only")
 	@JsonProperty("first_name")
 	@NotEmpty(message = "first name is empty")
-	@ApiModelProperty(value = "first name of the order purchaser", required = true)
+	@ApiModelProperty(value = "first name of the order purchaser - alpha letters only", required = true)
 	private String firstName;
 
-	@ApiModelProperty(value = "last name of the order purchaser", required = true)
-	@Pattern(regexp = "^[A-Za-z]+$")
+	@ApiModelProperty(value = "last name of the order purchaser - alpha letters only", required = true)
+	@Pattern(regexp = "^[A-Za-z]+$", message = "last name should contain alpha letters only")
 	@JsonProperty("last_name")
 	@NotEmpty(message = "last name is empty")
 	private String lastName;
 
-	@Email
+	@Email(message = "not a valid email")
 	@NotEmpty(message = "email is empty")
 	@ApiModelProperty(value = "email of the order purchaser", required = true)
 	private String email;
 
-	@Pattern(regexp = "^[0-9]+$")
-	@Size(min = 10, max = 10)
+	@Pattern(regexp = "^[0-9]+$", message = "phone number should contain 10 numbers only")
+	@Size(min = 10, max = 10, message = "phone number should contain 10 numbers only")
 	@NotEmpty(message = "phone is empty")
-	@ApiModelProperty(value = "phone number of the order purchaser", required = true)
+	@ApiModelProperty(value = "phone number of the order purchaser - contains 10 numbers only", required = true)
 	private String phone;
 
 	@NotEmpty(message = "order items are empty")

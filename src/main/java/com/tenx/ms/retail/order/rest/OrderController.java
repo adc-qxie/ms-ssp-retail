@@ -70,8 +70,7 @@ public class OrderController {
 			@ApiResponse(code = 500, message = "Internal server error") })
 	@RequestMapping(value = { "/{storeId:\\d+}" }, method = RequestMethod.POST)
 	public ResponseEntity<?> createOrder(@ApiParam(name = "storeId", value = "The id of the store", required = true) @PathVariable long storeId,
-			@ApiParam(value = "request json payload to describe the order to be created", required = true) @Validated @RequestBody CreateOrder createOrder,
-			HttpServletRequest request) {
+			@ApiParam(value = "create order object", required = true) @Validated @RequestBody CreateOrder createOrder, HttpServletRequest request) {
 		HttpHeaders headers = new HttpHeaders();
 		try {
 			storeService.getStoreByID(storeId).get();
